@@ -1,0 +1,7 @@
+C:\Temp\AboutMePublishAss1\Ass1.exe
+C:\Temp\AboutMePublishAss1\appsettings.Development.json
+C:\Temp\AboutMePublishAss1\appsettings.json
+C:\Temp\AboutMePublishAss1\Ass1.dll
+C:\Temp\AboutMePublishAss1\Ass1.deps.json
+C:\Temp\AboutMePublishAss1\Ass1.runtimeconfig.json
+C:\Temp\AboutMePublishAss1\Ass1.pdb

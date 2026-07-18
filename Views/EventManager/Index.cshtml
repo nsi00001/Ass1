@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Ass1.Models.Event>
+
+@{
+    ViewData["Title"] = "Event Manager";
+}
+
+<div class="em-page">
+
+    <div class="em-header">
+        <h1>@ViewData["PageTitle"]</h1>
+        <p class="em-subtitle">
+            @ViewData["EventCount"] event(s) scheduled
+        </p>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="em-empty">
+            <p>No events are currently scheduled.</p>
+        </div>
+    }
+    else
+    {
+        <div class="em-card-grid">
+            @foreach (var ev in Model)
+            {
+                <div class="em-card">
+                    <div class="em-card-header">
+                        <h2 class="em-card-title">@ev.Title</h2>
+                    </div>
+                    <div class="em-card-body">
+                        <p>
+                            <span class="em-label">📅 Date:</span>
+                            @ev.Date.ToString("dddd, MMMM d, yyyy · h:mm tt")
+                        </p>
+                        <p>
+                            <span class="em-label">📍 Location:</span>
+                            @ev.Location
+                        </p>
+                        <p>
+                            <span class="em-label">👥 Attendees:</span>
+                            @ev.Attendees.Count registered
+                        </p>
+                    </div>
+                    <div class="em-card-footer">
+                        <a class="em-btn"
+                           asp-controller="EventManager"
+                           asp-action="ManageAttendees"
+                           asp-route-id="@ev.Id">
+                            Manage Attendees
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>

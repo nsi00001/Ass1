@@ -1,0 +1,111 @@
+﻿@model Ass1.Models.Event
+
+@{
+    ViewData["Title"] = "Manage Attendees";
+    string eventName = ViewData["EventName"]?.ToString() ?? Model.Title;
+}
+
+<div class="em-page">
+
+
+    @* ── Event heading ─────────────────────────────────────── *@
+    <div class="em-header">
+        <a class="em-back-link"
+           asp-controller="EventManager"
+           asp-action="Index">
+            ← Back to Events
+        </a>
+        <h1>@eventName</h1>
+        <p class="em-subtitle">
+            @Model.Date.ToString("dddd, MMMM d, yyyy · h:mm tt") &nbsp;·&nbsp; @Model.Location
+        </p>
+    </div>
+
+    <div class="em-two-col">
+
+
+        @* ── Signup form ─────────────────────────────────────── *@
+        <section class="em-form-section">
+            <h2>Register as Attendee</h2>
+
+            <form asp-controller="EventManager"
+                  asp-action="ManageAttendees"
+                  asp-route-id="@Model.Id"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div class="em-form-group">
+                    <label asp-for="Attendees" class="em-form-label">Full Name</label>
+                    <input type="text"
+                           name="Name"
+                           id="Name"
+                           class="em-form-input"
+                           placeholder="Jane Doe"
+                           required />
+                    <span class="em-validation-msg">
+                        @Html.ValidationMessage("Name")
+                    </span>
+                </div>
+
+                <div class="em-form-group">
+                    <label for="Email" class="em-form-label">Email Address</label>
+                    <input type="email"
+                           name="Email"
+                           id="Email"
+                           class="em-form-input"
+                           placeholder="jane@example.com"
+                           required />
+                    <span class="em-validation-msg">
+                        @Html.ValidationMessage("Email")
+                    </span>
+                </div>
+
+                <button type="submit" class="em-btn em-btn-full">
+                    Sign Up
+                </button>
+
+            </form>
+        </section>
+
+
+        @* ── Attendees list ──────────────────────────────────── *@
+        <section class="em-list-section">
+            <h2>
+                Registered Attendees
+                <span class="em-badge">@Model.Attendees.Count</span>
+            </h2>
+
+            @if (!Model.Attendees.Any())
+            {
+                <p class="em-empty">No one has signed up yet. Be the first!</p>
+            }
+            else
+            {
+                <table class="em-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 1;
+                        }
+                        @foreach (var attendee in Model.Attendees)
+                        {
+                            <tr>
+                                <td>@(i++)</td>
+                                <td>@attendee.Name</td>
+                                <td>@attendee.Email</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </section>
+
+    </div>
+</div>
