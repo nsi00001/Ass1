@@ -4,7 +4,11 @@ namespace Ass1.Models
 {
     public class Attendee
     {
-     [Required(ErrorMessage = "Name is required.")]
+     public int Id { get; set; }
+
+     public int EventId { get; set; }
+     public Event? Event { get; set; }
+        [Required(ErrorMessage = "Name is required.")]
      [StringLength(100, ErrorMessage = "Name cannot exceed 100 characters.")]
      public string Name {
           get; 

@@ -1,0 +1,36 @@
+@model IEnumerable<Ass1.Models.Attendee>
+@{
+    ViewData["Title"] = "Manage Attendees";
+    var eventId = ViewData["EventId"];
+    var eventTitle = ViewData["EventTitle"];
+}
+
+<h1>Manage Attendees - @eventTitle</h1>
+
+<p>
+    <a asp-action="Create" asp-route-eventId="@eventId" class="btn btn-primary">Add Attendee</a>
+    <a asp-controller="Events" asp-action="Details" asp-route-id="@eventId">Back to Event</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td>
+                    <a asp-action="Edit" asp-route-eventId="@eventId" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-eventId="@eventId" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

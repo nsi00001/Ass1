@@ -1,0 +1,61 @@
+@model Ass1.Models.Event
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+@if (!string.IsNullOrEmpty(Model.BannerUrl))
+{
+    <img src="@Model.BannerUrl" alt="Event Banner" class="img-fluid mb-3" style="max-height: 300px;" />
+}
+
+<dl class="row">
+    <dt class="col-sm-2">Title</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(model => model.Title)</dd>
+
+    <dt class="col-sm-2">Description</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(model => model.Name)</dd>
+
+    <dt class="col-sm-2">Date</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(model => model.Date)</dd>
+
+    <dt class="col-sm-2">Location</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(model => model.Location)</dd>
+</dl>
+
+<h3>Attendees</h3>
+@if (Model.Attendees != null && Model.Attendees.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var attendee in Model.Attendees)
+            {
+                <tr>
+                    <td>@attendee.Name</td>
+                    <td>@attendee.Email</td>
+                    <td>
+                        <a asp-controller="Attendees" asp-action="Edit" asp-route-eventId="@Model.Id" asp-route-id="@attendee.Id">Edit</a> |
+                        <a asp-controller="Attendees" asp-action="Delete" asp-route-eventId="@Model.Id" asp-route-id="@attendee.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No attendees yet.</p>
+}
+
+<div class="mt-3">
+    <a asp-controller="Attendees" asp-action="Index" asp-route-eventId="@Model.Id" class="btn btn-primary">Manage Attendees</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Edit Event</a> |
+    <a asp-action="Index" class="btn btn-link">Back to List</a>
+</div>
