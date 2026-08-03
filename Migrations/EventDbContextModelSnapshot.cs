@@ -46,7 +46,7 @@ namespace Ass1.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Attendees");
+                    b.ToTable("Attendees", (string)null);
                 });
 
             modelBuilder.Entity("Ass1.Models.Event", b =>
@@ -77,7 +77,7 @@ namespace Ass1.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("Ass1.Models.Attendee", b =>
