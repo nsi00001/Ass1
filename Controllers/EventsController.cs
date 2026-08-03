@@ -3,6 +3,7 @@ using Ass1.Models;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ass1.Controllers
 {
@@ -41,6 +42,7 @@ namespace Ass1.Controllers
         }
 
         // GET: /events
+        [AllowAnonymous]
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
@@ -55,6 +57,7 @@ namespace Ass1.Controllers
         }
 
         // GET: /events/details/5
+        [Authorize]
         [HttpGet("details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -71,6 +74,7 @@ namespace Ass1.Controllers
 
 
         // GET: /events/create
+        [Authorize(Roles = "Organizer")]
         [HttpGet("create")]
         public IActionResult Create()
         {
@@ -78,6 +82,7 @@ namespace Ass1.Controllers
         }
 
         // POST: /events/create
+        [Authorize(Roles = "Organizer")]
         [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Event model, IFormFile? bannerImage)
@@ -112,6 +117,7 @@ namespace Ass1.Controllers
         }
 
         // GET: /events/edit/5
+        [Authorize(Roles = "Organizer")]
         [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -123,6 +129,7 @@ namespace Ass1.Controllers
         }
 
         // POST: /events/edit/5
+        [Authorize(Roles = "Organizer")]
         [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Event model, IFormFile? bannerImage)
@@ -162,6 +169,7 @@ namespace Ass1.Controllers
         }
 
         // GET: /events/delete/5
+        [Authorize(Roles = "Organizer")]
         [HttpGet("delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -177,6 +185,7 @@ namespace Ass1.Controllers
         }
 
         // POST: /events/delete/5
+        [Authorize(Roles = "Organizer")]
         [HttpPost("delete/{id}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

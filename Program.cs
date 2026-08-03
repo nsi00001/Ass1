@@ -1,4 +1,5 @@
 using Ass1.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,14 +10,18 @@ builder.Services.AddDbContext<EventDbContext>(options =>
         sqlOptions => sqlOptions.EnableRetryOnFailure()
     ));
 
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            options.SignIn.RequireConfirmedAccount = false).
+            AddRoles<IdentityRole>().
+            AddEntityFrameworkStores<EventDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<EventDbContext>();
-    DbInitializer.Initialize(context);
+    await DbInitializer.Initialize(scope.ServiceProvider);
 }
 
 if (!app.Environment.IsDevelopment())
@@ -28,10 +33,13 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+app.MapRazorPages(); // ? this is what registers the Identity /Account/* routes
+
+await app.RunAsync();

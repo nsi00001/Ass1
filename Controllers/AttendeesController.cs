@@ -2,6 +2,7 @@
 using Ass1.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ass1.Controllers
 {
@@ -16,6 +17,7 @@ namespace Ass1.Controllers
         }
 
         // GET: /events/5/attendees
+        [Authorize]
         [HttpGet("")]
         public async Task<IActionResult> Index(int eventId)
         {
@@ -32,6 +34,7 @@ namespace Ass1.Controllers
         }
 
         // GET: /events/5/attendees/create
+        [Authorize(Roles = "Organizer")]
         [HttpGet("create")]
         public IActionResult Create(int eventId)
         {
@@ -40,6 +43,7 @@ namespace Ass1.Controllers
         }
 
         // POST: /events/5/attendees/create
+        [Authorize(Roles = "Organizer")]
         [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -58,6 +62,7 @@ namespace Ass1.Controllers
         }
 
         // GET: /events/5/attendees/edit/3
+        [Authorize(Roles = "Organizer")]
         [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int eventId, int id)
         {
@@ -72,6 +77,7 @@ namespace Ass1.Controllers
         }
 
         // POST: /events/5/attendees/edit/3
+        [Authorize(Roles = "Organizer")]
         [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
@@ -103,6 +109,7 @@ namespace Ass1.Controllers
         }
 
         // GET: /events/5/attendees/delete/3
+        [Authorize(Roles = "Organizer")]
         [HttpGet("delete/{id}")]
         public async Task<IActionResult> Delete(int eventId, int id)
         {
@@ -117,6 +124,7 @@ namespace Ass1.Controllers
         }
 
         // POST: /events/5/attendees/delete/3
+        [Authorize(Roles = "Organizer")]
         [HttpPost("delete/{id}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int eventId, int id)
