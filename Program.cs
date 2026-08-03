@@ -10,7 +10,7 @@ builder.Services.AddDbContext<EventDbContext>(options =>
         sqlOptions => sqlOptions.EnableRetryOnFailure()
     ));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             options.SignIn.RequireConfirmedAccount = false).
             AddRoles<IdentityRole>().
             AddEntityFrameworkStores<EventDbContext>();

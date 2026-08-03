@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Ass1.Data
 {
-    public class EventDbContext : IdentityDbContext<IdentityUser>
+    public class EventDbContext : IdentityDbContext<ApplicationUser>
     {
         public EventDbContext(DbContextOptions<EventDbContext> options) : base(options)
         {

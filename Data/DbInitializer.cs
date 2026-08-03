@@ -9,7 +9,7 @@ namespace Ass1.Data
         public static async Task Initialize(IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetRequiredService<EventDbContext>();
-            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             context.Database.EnsureCreated();
@@ -24,7 +24,7 @@ namespace Ass1.Data
             // Seed organizer user
             if (await userManager.FindByEmailAsync("organizer@example.com") == null)
             {
-                var user = new IdentityUser
+                var user = new ApplicationUser
                 {
                     UserName = "organizer@example.com",
                     Email = "organizer@example.com"
@@ -36,7 +36,7 @@ namespace Ass1.Data
             // Seed regular user
             if (await userManager.FindByEmailAsync("user@example.com") == null)
             {
-                var user = new IdentityUser
+                var user = new ApplicationUser
                 {
                     UserName = "user@example.com",
                     Email = "user@example.com"
